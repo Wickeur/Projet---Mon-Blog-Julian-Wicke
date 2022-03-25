@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes projets{% endblock %}
+
+{% block body %}
+    <style>
+        body{
+            background-image: url("../Image/fond2.jpg");
+            color: white;
+            background-attachment:fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        h1{
+            text-align: center;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .formulaire{
+            position: relative;
+            left: 10%;
+            width: 80%;
+        }
+    </style>
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="formulaire">
+            <div class="row">
+                <h2>Ajout d'une expérience</h1>
+                    <form action="" method="POST">
+                        <div class="mb-3">
+                            <label for="nom_poste" class="form-label">Le nom du poste</label>
+                            <input required type="text" class="form-control" id="nom_poste" name="nom_poste" value="{{ experience.nomPoste }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="type_poste" class="form-label">Le type de poste</label>
+                            <input required type="text" class="form-control" id="type_poste" name="type_poste" value="{{ experience.typePoste }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nom_entreprise" class="form-label">Le nom de l'entreprise</label>
+                            <input required type="text" class="form-control" id="nom_entreprise" name="nom_entreprise" value="{{ experience.nomEntreprise }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lieu_entreprise" class="form-label">Lieu de l'entreprise</label>
+                            <input required type="text" class="form-control" id="lieu_entreprise" name="lieu_entreprise" value="{{ experience.lieuEntreprise }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date_debut_exp" class="form-label">Date du début</label>
+                            <input required type="date" class="form-control" id="date_debut_exp" name="date_debut_exp" value="{{ experience.dateDebutExp }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date_fin_exp" class="form-label">Date de fin</label>
+                            <input required type="date" class="form-control" id="date_fin_exp" name="date_fin_exp" value="{{ experience.dateFinExp }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descriptif_exp" class="form-label">Description de l'expérience</label>
+                            <input required type="text" class="form-control" id="descriptif_exp" name="descriptif_exp" value="{{ experience.descriptifExp }}">
+                        </div>
+
+                        <!--Bouton pour valider-->
+                        <input type="submit" class="btn btn-primary">
+                    </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

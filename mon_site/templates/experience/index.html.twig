@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les expériences{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        color: white;
+        background-attachment:fixed;
+        background-image: url("Image/fond2.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+    h1{
+        text-align: center;
+    }
+    .contenu{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 20px 20px;
+    }
+    .experience{
+        margin: 20px;
+        padding: 10px;
+        background-color: #9a9b9c80;
+    }
+    .experience_grille{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 2px 2px;
+    }
+    img{
+        width: 250px;
+    }
+    .formulaire{
+        position: relative;
+        left: 10%;
+        width: 80%;
+    }
+</style>
+
+    <h1>Expériences</h1>
+    <div class="contenu">
+        {% for experience in experiences %}
+            <div class="experience">
+                <h2>{{ experience.nomPoste() }}</h2>
+                <div class="experience_grille">
+                    <p><u><b>Type de poste :</b></u>{{ experience.typePoste }}</p>
+                    <p><u><b>Nom entreprise :</b></u>{{ experience.nomEntreprise }}</p>
+                    <p><u><b>Début :</b></u> <br>
+                        {{ experience.dateDebutExp|date('d/F/Y') }}</p>
+                    <p><u><b>Fin :</b></u> <br>
+                        {{ experience.dateFinExp|date('d/F/Y') }}</p>
+                    <p><u><b>Ville :</b></u>
+                        <br>{{ experience.lieuEntreprise }}</p>
+
+                <p><u><b>Description :</b></u><br>
+                    {{ experience.descriptifExp }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <p><a href="{{ path("modif_experience", { id_experience:experience.idExperience}) }}">Modifier</a></p>
+                    <p><a href="{{ path("sup_experience", { id_experience:experience.idExperience}) }}">Supprimer</a></p>
+                {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <br>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="formulaire">
+            <div class="row">
+                <h2>Ajout d'une expérience</h1>
+                {% if msg %}
+                    <div class="alert alert-success">{{ msg }}</div>
+                {% endif %}
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="nom_poste" class="form-label">Le nom du poste</label>
+                        <input required type="text" class="form-control" id="nom_poste" name="nom_poste">
+                    </div>
+                    <div class="mb-3">
+                        <label for="type_poste" class="form-label">Le type de poste</label>
+                        <input required type="text" class="form-control" id="type_poste" name="type_poste">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nom_entreprise" class="form-label">Le nom de l'entreprise</label>
+                        <input required type="text" class="form-control" id="nom_entreprise" name="nom_entreprise">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lieu_entreprise" class="form-label">Lieu de l'entreprise</label>
+                        <input required type="text" class="form-control" id="lieu_entreprise" name="lieu_entreprise">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_debut_exp" class="form-label">Date du début</label>
+                        <input required type="date" class="form-control" id="date_debut_exp" name="date_debut_exp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_fin_exp" class="form-label">Date de fin</label>
+                        <input required type="date" class="form-control" id="date_fin_exp" name="date_fin_exp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="descriptif_exp" class="form-label">Description de l'expérience</label>
+                        <input required type="text" class="form-control" id="descriptif_exp" name="descriptif_exp">
+                    </div>
+
+                    <!--Bouton pour valider-->
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

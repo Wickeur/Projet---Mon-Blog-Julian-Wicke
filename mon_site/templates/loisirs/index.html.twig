@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Loisirs{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        color: white;
+        background-attachment:fixed;
+        background-image: url("Image/fond2.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+
+    .contenu{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 20px 20px;
+    }
+    .loisirs{
+        text-align: center;
+        margin: 20px;
+        padding: 10px;
+        background-color: #9a9b9c80;
+    }
+    img{
+        width: 250px;
+    }
+
+    .formulaire{
+        position: relative;
+        left: 10%;
+        width: 80%;
+    }
+    h1{
+        text-align: center;
+    }
+</style>
+
+    <h1>Mes Loisirs</h1>
+    <div class="contenu">
+        {% for loisirs in loisirss %}
+            <div class="loisirs">
+                <img src="{{ loisirs.imageLoisirs }}">
+                <br>
+                <h2>{{ loisirs.nomLoisirs }}</h2>
+                <br>
+                <p>{{ loisirs.descriptionLoisirs }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <br>
+                    <a href="{{ path("modif_loisirs", { id:loisirs.id}) }}">Modifier</a>
+                    <br>
+                    <a href="{{ path("sup_loisirs", { id:loisirs.id}) }}">Supprimer</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <br>
+    <br>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="formulaire">
+            <div class="row">
+                <h2>Ajout d'un loisirs</h2>
+                {% if msg %}
+                    <div class="alert alert-success">{{ msg }}</div>
+                {% endif %}
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="nom_loisirs" class="form-label">Nom du Loisirs</label>
+                        <input required type="text" class="form-control" id="nom_loisirs" name="nom_loisirs">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image_loisirs" class="form-label">Lien de l'image</label>
+                        <input type="text" class="form-control" id="image_loisirs" name="image_loisirs">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description_loisirs" class="form-label">Description du loisirs</label>
+                        <input type="text" class="form-control" id="description_loisirs" name="description_loisirs">
+                    </div>
+
+                    <!--Bouton pour valider-->
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

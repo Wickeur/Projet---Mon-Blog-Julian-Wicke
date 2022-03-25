@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page Presentation{% endblock %}
+
+{% block body %}
+    <style>
+        body{
+            color: white;
+            background-attachment:fixed;
+            background-image: url("Image/fond2.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+        .contenu {
+            position: relative;
+            top: 20px;
+            left: 40%;
+            width: 35%;
+        }
+        img{
+            position: fixed;
+            top:10%;
+            left:2%;
+            width: 250px;
+        }
+        .coordonees {
+            position: fixed;
+            top: 10%;
+            right: 2%;
+            max-width: 20%;
+        }
+    </style>
+
+    <div class="profil_image"><img src="Image/PhotoProfil.jpg"></div>
+
+    <div class="contenu">
+        <h1>Qui est Julian Wicke ?</h1>
+        <br>
+
+        <div class="description">
+            Bonjour tout le monde,<br>
+            Je m'appelle Julian Wicke,<br>
+            Né le 18 février 2002 et vivant dans le secteur de l'Amandinois, <br>
+            Je suis agréable, souriant, sérieux et dynamique.<br>
+            J'aime le travail d'équipe <br>
+            De plus, je détiens une voiture ainsi que ma propre micro-entreprise pour être coursier.
+            <br>
+            <br>
+        </div>
+        <div class="coordonees">
+            <h2>Informations</h2>
+            <ul>
+                <li>Age : 20 ans</li>
+                <li>Adresse :
+                    <ul>
+                        <li>81 rue Jules Pamelard, 59258 / Mortagne-du-Nord</li>
+                        <li>64 rue Pierre Boeynaems, 59158 / Mortagne-du-Nord</li>
+                    </ul>
+                </li>
+                <li>Téléphone : 06 64 48 58 53</li>
+                <li>Mail : julian.wicke@orange.fr</li>
+                <li>Pays : France</li>
+                <li>Permis B</li>
+                <li>Disponibilité :
+                    <ul>
+                        <li>Vendredi soir</li>
+                        <li>Week-End</li>
+                        <li>Vacances Scolaire</li>
+                    </ul>
+                </li>
+                <li><a href="https://www.linkedin.com/in/julian-wicke-8b6ba11b8/">LinkedIn</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+{% endblock %}

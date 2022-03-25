@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion Utilisateur{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        color: white;
+        background-attachment:fixed;
+        background-image: url("../Image/fond2.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+
+    table{
+        background-color: white;
+    }
+
+    .liste_compte{
+        position: relative;
+        left: 10%;
+        width: 80%;
+    }
+</style>
+
+<div class="liste_compte">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom du compte</th>
+                <th>Rôle</th>
+            </tr>
+        </thead>
+        <!--La liste-->
+        <tbody>
+            {% for gestion in gestionUtilisateurs %}
+                <tr>
+                    <td>{{ gestion.username }}</td>
+                    <td>{% for role in gestion.roles %}
+                        {{ role }}
+                    {% endfor %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

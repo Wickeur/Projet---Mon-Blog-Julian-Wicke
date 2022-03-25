@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes projets{% endblock %}
+
+{% block body %}
+    <style>
+        body{
+            background-image: url("../Image/fond2.jpg");
+            color: white;
+            background-attachment:fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        h1{
+            text-align: center;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .formulaire{
+            position: relative;
+            left: 10%;
+            width: 80%;
+        }
+    </style>
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="formulaire">
+            <div class="row">
+                <h2>Modifier la formation</h2>
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="nom_ecole" class="form-label">Le nom de la formation</label>
+                        <!--value = pour afficher les informations prédéfinis de base-->
+                        <input required type="text" class="form-control" id="nom_ecole" name="nom_ecole" value="{{ formation.nomEcole }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nom_diplome" class="form-label">Le nom du diplome</label>
+                        <input required type="text" class="form-control" id="nom_diplome" name="nom_diplome" value="{{ formation.nomDiplome }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nom_domaine" class="form-label">Le nom du domaine</label>
+                        <input type="text" class="form-control" id="nom_domaine" name="nom_domaine" value="{{ formation.nomDomaine }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_debut" class="form-label">Date du début</label>
+                        <input type="date" class="form-control" id="date_debut" name="date_debut" value="{{ formation.dateDebut }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_fin" class="form-label">Date de fin</label>
+                        <input type="date" class="form-control" id="date_fin" name="date_fin" value="{{ formation.dateFin }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="resultat" class="form-label">Résultat de la formation</label>
+                        <input required type="text" class="form-control" id="resultat" name="resultat" value="{{ formation.resultat }}">
+                    </div>
+
+                    <!--Bouton pour valider-->
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

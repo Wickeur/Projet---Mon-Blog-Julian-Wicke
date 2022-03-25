@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Formations{% endblock %}
+
+{% block body %}
+    <!--Définir le style de la page-->
+<style>
+    body{
+        color: white;
+        background-attachment:fixed;
+        background-image: url("Image/fond2.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+    h1{
+        text-align: center;
+    }
+    .contenu{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 20px 20px;
+    }
+    .formation{
+        margin: 20px;
+        padding: 10px;
+        background-color: #9a9b9c80;
+    }
+    .formation_grille{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 2px 2px;
+    }
+    img{
+        width: 250px;
+    }
+
+    .formulaire{
+        position: relative;
+        left: 10%;
+        width: 80%;
+    }
+</style>
+
+    <h1>Formation</h1>
+    <!--Affichage en grille-->
+    <div class="contenu">
+            {% for formation in formations %}
+            <div class="formation">
+                    <h2>{{ formation.nomEcole() }}</h2>
+                <div class="formation_grille">
+                    <p><u><b>Nom du diplome :</b></u><br>
+                        {{ formation.nomDiplome }}</p>
+                    <p><u><b>Nom du domaine :</b></u><br>
+                        {{ formation.nomDomaine }}</p>
+                    <p><u><b>Début de la formation :</b></u><br>
+                        {{ formation.dateDebut|date('d/F/Y') }}</p>
+                    <p><u><b>Fin de la formation :</b></u><br>
+                        {{ formation.dateFin|date('d/F/Y') }}</p>
+
+                    <p><u><b>Résultat :</b></u> {{ formation.resultat }}</p>
+                <!--Si je suis administrateur, je peux modifier (redirection vers une autre page spécifique) et supprimer une formation-->
+                {% if is_granted('ROLE_ADMIN') %}
+                    <br>
+                    <a href="{{ path("modif_formation", { id_formation:formation.idFormation}) }}">Modifier</a>
+                    <br>
+                    <a href="{{ path("sup_formation", { id_formation:formation.idFormation}) }}">Supprimer</a>
+                {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+    </div>
+    <!--Si je suis administrateur, je peux ajouter des formations avec un formulaire-->
+    {% if is_granted('ROLE_ADMIN') %}
+        <br>
+        <br>
+        <div class="formulaire">
+            <div class="row">
+                <h2>Ajout d'une formation</h2>
+                {% if msg %}
+                    <div class="alert alert-success">{{ msg }}</div>
+                {% endif %}
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="nom_ecole" class="form-label">Le nom de la formation</label>
+                        <input required type="text" class="form-control" id="nom_ecole" name="nom_ecole">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nom_diplome" class="form-label">Le nom du diplome</label>
+                        <input required type="text" class="form-control" id="nom_diplome" name="nom_diplome">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nom_domaine" class="form-label">Le nom du domaine</label>
+                        <input type="text" class="form-control" id="nom_domaine" name="nom_domaine">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_debut" class="form-label">Date du début</label>
+                        <input type="date" class="form-control" id="date_debut" name="date_debut">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_fin" class="form-label">Date de fin</label>
+                        <input type="date" class="form-control" id="date_fin" name="date_fin">
+                    </div>
+                    <div class="mb-3">
+                        <label for="resultat" class="form-label">Résultat de la formation</label>
+                        <input required type="text" class="form-control" id="resultat" name="resultat">
+                    </div>
+
+                    <!--Bouton pour valider-->
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

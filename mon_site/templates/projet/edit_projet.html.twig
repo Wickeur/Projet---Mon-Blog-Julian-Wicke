@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes projets{% endblock %}
+
+{% block body %}
+    <style>
+        body{
+            background-image: url("../Image/fond2.jpg");
+            color: white;
+            background-attachment:fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        h1{
+            text-align: center;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .formulaire{
+            position: relative;
+            left: 10%;
+            width: 80%;
+        }
+    </style>
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="formulaire">
+            <div class="row">
+                <h2>Modifier le projet</h2>
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="projet_name" class="form-label">Nom du projet</label>
+                        <input required type="text" class="form-control" id="projet_name" name="projet_name" value="{{ projet.projetName }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image_projet" class="form-label">Le lien de l'image</label>
+                        <input required type="text" class="form-control" id="image_projet" name="image_projet" value="{{ projet.imageProjet }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="annee_projet" class="form-label">L'année du projet</label>
+                        <input required type="number" class="form-control" id="annee_projet" name="annee_projet" value="{{ projet.anneeProjet }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="projet_descriptif" class="form-label">Description du projet</label>
+                        <input required type="text" class="form-control" id="projet_descriptif" name="projet_descriptif" value="{{ projet.projetDescriptif }}">
+                    </div>
+
+                    <!--Bouton pour valider-->
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

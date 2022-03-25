@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes compétences{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        color: white;
+        background-attachment:fixed;
+        background-image: url("Image/fond2.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+    h1 {
+        text-align: center;
+    }
+    .contenu{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 20px 20px;
+    }
+
+    .competence{
+        text-align: center;
+        margin: 20px;
+        padding: 10px;
+    }
+    .formulaire{
+        position: relative;
+        left: 10%;
+        width: 80%;
+    }
+</style>
+<h1>Mes compétences</h1>
+<div class="contenu">
+    {% for competence in competences %}
+        <div class="competence">
+            <img src="{{ asset(competence.imageCompetence) }}" width="150px">
+            <br>
+            <br>
+            <h2>{{ competence.nomCompetence }}</h2>
+            {% if is_granted('ROLE_ADMIN') %}
+                <br>
+                <a href="{{ path('sup_competence', {id:competence.id}) }}">Supprimer</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+    <br>
+    <br>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="formulaire">
+            <div class="row">
+                <h2>Ajout d'une competence</h2>
+                {% if msg %}
+                    <div class="alert alert-success">{{ msg }}</div>
+                {% endif %}
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="nom_competence" class="form-label">Nom de la competence</label>
+                        <input required type="text" class="form-control" id="nom_competence" name="nom_competence">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image_competence" class="form-label">Le lien de l'image</label>
+                        <input required type="text" class="form-control" id="image_competence" name="image_competence">
+                    </div>
+                    <div class="mb-3">
+                        <label for="type_competence" class="form-label">Type de compétence</label>
+                        <input type="text" class="form-control" id="type_competence" name="type_competence">
+                    </div>
+
+                    <!--Bouton pour valider-->
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

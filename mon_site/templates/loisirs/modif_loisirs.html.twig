@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes projets{% endblock %}
+
+{% block body %}
+    <style>
+        body{
+            background-image: url("../Image/fond2.jpg");
+            color: white;
+            background-attachment:fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        h1{
+            text-align: center;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .formulaire{
+            position: relative;
+            left: 10%;
+            width: 80%;
+        }
+    </style>
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="formulaire">
+            <div class="row">
+                <h2>Modifier un loisirs</h2>
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="nom_loisirs" class="form-label">Nom du Loisirs</label>
+                        <input required type="text" class="form-control" id="nom_loisirs" name="nom_loisirs" value="{{ loisirs.nomLoisirs }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image_loisirs" class="form-label">Lien de l'image</label>
+                        <input type="text" class="form-control" id="image_loisirs" name="image_loisirs" value="{{ loisirs.imageLoisirs }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description_loisirs" class="form-label">Description du loisirs</label>
+                        <input type="text" class="form-control" id="description_loisirs" name="description_loisirs" value="{{ loisirs.descriptionLoisirs }}">
+                    </div>
+
+                    <!--Bouton pour valider-->
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes projets{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        color: white;
+        background-attachment:fixed;
+        background-image: url("Image/fond2.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+    .contenu{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 20px 20px;
+    }
+    h1{
+        text-align: center;
+        margin: 10px;
+        padding: 10px;
+    }
+    .contenu_projet{
+        text-align: center;
+        margin: 20px;
+        padding: 10px;
+        background-color: #9a9b9c80;
+    }
+    p{
+        margin: 5px;
+    }
+    .formulaire{
+        position: relative;
+        left: 10%;
+        width: 80%;
+    }
+</style>
+
+    <h1>Mes projets</h1>
+<div class="contenu">
+        {% for projet in projets %}
+            <div class="contenu_projet">
+                <h2>{{ projet.projetName }}</h2>
+                <br>
+                <img src="{{ asset(projet.imageProjet) }}" width="250px">
+                <br>
+                {{ projet.anneeProjet }}
+                <br>
+                <p>{{ projet.projetDescriptif }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <br>
+                    <a href="{{ path("modif_projet", { id_projet:projet.projetId}) }}">Modifier le projet</a>
+                    <br>
+                    <a href="{{ path("sup_projet", { projet_id:projet.projetId}) }}">Supprimer</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+</div>
+    <br>
+    <br>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="formulaire">
+            <div class="row">
+                <h2>Ajout d'un projet</h2>
+                {% if msg %}
+                    <div class="alert alert-success">{{ msg }}</div>
+                {% endif %}
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="projet_name" class="form-label">Nom du projet</label>
+                        <input required type="text" class="form-control" id="projet_name" name="projet_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image_projet" class="form-label">Le lien de l'image</label>
+                        <input required type="text" class="form-control" id="image_projet" name="image_projet">
+                    </div>
+                    <div class="mb-3">
+                        <label for="annee_projet" class="form-label">L'année du projet</label>
+                        <input required type="number" class="form-control" id="annee_projet" name="annee_projet">
+                    </div>
+                    <div class="mb-3">
+                        <label for="projet_descriptif" class="form-label">Description du projet</label>
+                        <input required type="text" class="form-control" id="projet_descriptif" name="projet_descriptif">
+                    </div>
+
+                    <!--Bouton pour valider-->
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
